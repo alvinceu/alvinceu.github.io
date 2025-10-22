@@ -1,0 +1,121 @@
+@layer utilities {
+  .blog-page-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  .blog-page-main {
+    margin-inline: auto;
+
+    @media (width >= 768px) {
+      min-width: 800px;
+    }
+    @media (width >= 1280px) {
+      min-width: 1440px;
+    }
+  }
+
+  .our-digital-notes-section {
+
+  }
+
+  .our-digital-notes-section-title-h2 {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+    margin-bottom: 32px;
+  }
+
+  .our-digital-notes-section-container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1440px;
+    position: relative;
+    gap: 24px;
+    margin: 16px;
+    @media (width >= 768px) {
+      margin: 32px;
+      padding: 16px;
+    }
+  }
+
+  .our-digital-notes-section-blogs-vertical-straight {
+    display: none;
+    @media (width >= 768px) {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 2px;
+      height: 200px;
+      background-color: var(--color-lab3-black);
+    }
+  }
+
+  .our-digital-notes-section-blogs-horizontal-straight {
+    display: none;
+    @media (width >= 768px) {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 2px;
+      background-color: var(--color-lab3-black);
+    }
+  }
+
+  .our-digital-notes-section-blog-container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 680px;
+    border: 1px solid var(--color-lab3-black);
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .our-digital-notes-section-blog-image-container {
+    @media (width >= 768px) {
+      max-width: 340px;
+      width: 50%;
+    }
+  }
+  .our-digital-notes-section-blog-title-and-button-read-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-right: 16px;
+    padding-top: 16px;
+    padding-left: 16px;
+    gap: 16px;
+    @media (width >= 768px) {
+      width: 50%;
+    }
+  }
+  .our-digital-notes-section-blog-title-container {
+    display: flex;
+  }
+
+  .our-digital-notes-section-blog-button-read-container {
+    border: 1px solid var(--color-lab3-black);
+    padding: 4px 64px;
+    width: fit-content;
+    border-radius: 4px;
+    text-transform: uppercase;
+    color: var(--color-lab3-black);
+
+    &:hover {
+      border-color: var(--color-lab3-ceramic);
+      color: var(--color-lab3-ceramic);
+    }
+
+    &:active {
+      border-color: var(--color-lab3-ceramic);
+      color: var(--color-lab3-black);
+    }
+  }
+
+  .our-digital-notes-section-blog-description-container {
+    display: flex;
+    padding: 16px;
+  }
+}

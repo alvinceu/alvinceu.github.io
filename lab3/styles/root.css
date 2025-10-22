@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  --font-barlow: "Barlow", sans-serif;
+  --color-lab3-black: #232323;
+  --color-lab3-red: #F14668;
+  --color-lab3-ceramic: #C69978;
+  --color-lab3-white: #FAFAFA;
+  --color-lab3-gray1: #D9D9D9;
+  --color-lab3-gray2: #D2D2D2;
+  --color-gray-300: #D1D5DB;
+  --color-gray-400: #9CA3AF;
+  --color-gray-500: #6b7280;
+  --color-purple-300: #DAB2FFFF;
+}
+
+/* colors start */
+
+.terms-link {
+  color: var(--color-purple-300);
+}
+
+/* colors end */

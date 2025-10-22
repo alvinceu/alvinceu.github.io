@@ -1,0 +1,86 @@
+@layer utilities {
+  .where-it-all-began-section {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    max-width: 1200px;
+    @media (width >= 768px) {
+      padding: 24px;
+    }
+    @media (width >= 1024px) {
+      gap: 24px;
+    }
+    @media (width >= 1280px) {
+      margin-inline: auto;
+    }
+  }
+
+  .where-it-all-began-section-title-h2 {
+    display: flex;
+    flex-direction: column;
+    margin-inline: auto;
+  }
+
+  .where-it-all-began-section-photo-and-text-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    @media (width >= 1024px) {
+      flex-direction: row;
+    }
+  }
+
+  .where-it-all-began-section-photo-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    @media (width >= 768px) {
+      margin-left: 32px;
+      margin-right: 32px;
+    }
+    @media (width >= 1024px) {
+      margin: 0;
+      width: 50%;
+    }
+  }
+
+  .where-it-all-began-section-photo {
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  .where-it-all-began-section-text-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    @media (width >= 1024px) {
+      width: 50%;
+    }
+  }
+
+  .find-us-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .find-us-section-title-h2 {
+    display: flex;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    margin-inline: auto;
+  }
+
+  .find-us-section-map {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    margin-inline: auto;
+    padding: 16px;
+
+    @media (width >= 768px) {
+      padding: 32px;
+    }
+  }
+}
