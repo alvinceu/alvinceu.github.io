@@ -6,7 +6,7 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Ceramic-soul-blog</title>
+  <title>Ceramic-soul-catalog</title>
   <link rel="stylesheet" href="./catalogpage-main.css">
 </head>
 <body class="catalog-body">
@@ -76,41 +76,7 @@
     <div class="our-pottery-section-container">
       <div class="our-pottery-section-container-horizontal-straight"></div>
       <div class="our-pottery-section-container-vertical-straight"></div>
-      <div class="our-pottery-section-product-container">
-        <img src="../images/catalog/content/tea4.png" alt="">
-        <div class="our-pottery-section-product-text-container">
-          <p class="catalog-barlow-default-text">Terracotta Whisper</p>
-          <p class="catalog-barlow-price-text">19.99 €</p>
-        </div>
-      </div>
-      <div class="our-pottery-section-product-container">
-        <img src="../images/catalog/content/tea5.png" alt="">
-        <div class="our-pottery-section-product-text-container">
-          <p class="catalog-barlow-default-text">Clay Bloom</p>
-          <p class="catalog-barlow-price-text">24.99 €</p>
-        </div>
-      </div>
-      <div class="our-pottery-section-product-container">
-        <img src="../images/catalog/content/tea6.png" alt="">
-        <div class="our-pottery-section-product-text-container">
-          <p class="catalog-barlow-default-text">Earthen Grace</p>
-          <p class="catalog-barlow-price-text">16.99 €</p>
-        </div>
-      </div>
-      <div class="our-pottery-section-product-container">
-        <img src="../images/catalog/content/tea7.png" alt="">
-        <div class="our-pottery-section-product-text-container">
-          <p class="catalog-barlow-default-text">Moss & Moon</p>
-          <p class="catalog-barlow-price-text">21.99 €</p>
-        </div>
-      </div>
-      <div class="our-pottery-section-product-container">
-        <img src="../images/catalog/content/tea4.png" alt="">
-        <div class="our-pottery-section-product-text-container">
-          <p class="catalog-barlow-default-text">Solace Set</p>
-          <p class="catalog-barlow-price-text">29.99 €</p>
-        </div>
-      </div>
+
     </div>
   </div>
 
@@ -166,5 +132,109 @@
     </div>
   </div>
 </footer>
+<script>
+  const API_BASE = "https://ceramic-api.onrender.com";
+
+  function productToHTML(p) {
+    return `
+    <div class="our-pottery-section-product-container">
+      <img src="${new URL(p.image, API_BASE)}" alt="${p.title}" loading="lazy">
+      <div class="our-pottery-section-product-text-container">
+        <p class="catalog-barlow-default-text">${p.title}</p>
+        <p class="catalog-barlow-price-text">${p.price} €</p>
+      </div>
+    </div>`;
+  }
+
+  async function fetchProducts() {
+    try {
+      const res = await fetch(`${API_BASE}/api/products`);
+      if (!res.ok) throw new Error(`Failed to fetch: ${res.status}`);
+      return res.json();
+    } catch (err) {
+      throw new Error(`API error: ${err.message}`);
+    }
+  }
+
+  async function renderProducts(category = "tea") {
+    const grid = document.querySelector(".our-pottery-section-container");
+    if (!grid) {
+      console.warn("No .our-pottery-section-container found");
+      return;
+    }
+
+    grid.innerHTML = `
+    <div class="our-pottery-section-container-horizontal-straight"></div>
+    <div class="our-pottery-section-container-vertical-straight"></div>
+    <div class="loading">Loading…</div>
+  `;
+
+    try {
+      const data = await fetchProducts();
+      if (!data || !Array.isArray(data) || data.length === 0) {
+        grid.innerHTML = `
+        <div class="our-pottery-section-container-horizontal-straight"></div>
+        <div class="our-pottery-section-container-vertical-straight"></div>
+        <div class="error">No products found</div>
+      `;
+        return;
+      }
+
+      let shown = [];
+      if (category === "tea") shown = data.slice(0, 5);
+      if (category === "kitchen") shown = data.slice(5, 8);
+      if (category === "plants") shown = data.slice(8, 10);
+
+      if (shown.length === 0) {
+        grid.innerHTML = `
+        <div class="our-pottery-section-container-horizontal-straight"></div>
+        <div class="our-pottery-section-container-vertical-straight"></div>
+        <div class="error">No products found for this category</div>
+      `;
+        return;
+      }
+
+      grid.innerHTML = `
+      <div class="our-pottery-section-container-horizontal-straight"></div>
+      <div class="our-pottery-section-container-vertical-straight"></div>
+      ${shown.map(productToHTML).join("")}
+    `;
+    } catch (err) {
+      console.error(err);
+      grid.innerHTML = `
+      <div class="our-pottery-section-container-horizontal-straight"></div>
+      <div class="our-pottery-section-container-vertical-straight"></div>
+      <div class="error">Failed to load products: ${err.message}</div>
+    `;
+    }
+  }
+
+  function setupTabs() {
+    const tabs = document.querySelectorAll(".our-pottery-section-tabs-container button");
+    if (!tabs.length) {
+      console.warn("No tabs found");
+      return;
+    }
+
+    tabs.forEach((btn) =>
+      btn.addEventListener("click", async () => {
+        tabs.forEach((b) => b.classList.remove("our-pottery-tab-actual"));
+        btn.classList.add("our-pottery-tab-actual");
+
+        const text = btn.textContent.trim().toLowerCase();
+        let category = "tea";
+        if (text.includes("kitchen")) category = "kitchen";
+        if (text.includes("plants")) category = "plants";
+
+        await renderProducts(category);
+      })
+    );
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    setupTabs();
+    renderProducts("tea");
+  });
+</script>
 </body>
 </html>
