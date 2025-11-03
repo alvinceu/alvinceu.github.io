@@ -133,108 +133,77 @@
   </div>
 </footer>
 <script>
-  const API_BASE = "https://ceramic-api.onrender.com";
+  const API_BASE = "https://ceramic-api.onrender.com/api";
+  const PRODUCTS_API = `${API_BASE}/products`;
+  const GRID_SELECTOR = ".our-pottery-section-container";
 
-  function productToHTML(p) {
-    return `
-    <div class="our-pottery-section-product-container">
-      <img src="${new URL(p.image, API_BASE)}" alt="${p.title}" loading="lazy">
-      <div class="our-pottery-section-product-text-container">
-        <p class="catalog-barlow-default-text">${p.title}</p>
-        <p class="catalog-barlow-price-text">${p.price} €</p>
-      </div>
-    </div>`;
-  }
 
   async function fetchProducts() {
     try {
-      const res = await fetch(`${API_BASE}/api/products`);
-      if (!res.ok) throw new Error(`Failed to fetch: ${res.status}`);
+      const res = await fetch(PRODUCTS_API);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return res.json();
     } catch (err) {
-      throw new Error(`API error: ${err.message}`);
+      console.error("Error fetching products:", err);
+      return [];
     }
   }
 
-  async function renderProducts(category = "tea") {
-    const grid = document.querySelector(".our-pottery-section-container");
-    if (!grid) {
-      console.warn("No .our-pottery-section-container found");
-      return;
-    }
+  const productToHTML = ({ image, title, price }) => `
+  <div class="our-pottery-section-product-container">
+    <img src="${new URL(image, API_BASE)}" alt="${title}" loading="lazy">
+    <div class="our-pottery-section-product-text-container">
+      <p class="catalog-barlow-default-text">${title}</p>
+      <p class="catalog-barlow-price-text">${price} €</p>
+    </div>
+  </div>
+`;
+  function renderProductsLazy(products, batchSize) {
+    const grid = document.querySelector(GRID_SELECTOR);
+    if (!grid) return;
 
     grid.innerHTML = `
     <div class="our-pottery-section-container-horizontal-straight"></div>
     <div class="our-pottery-section-container-vertical-straight"></div>
-    <div class="loading">Loading…</div>
   `;
 
-    try {
-      const data = await fetchProducts();
-      if (!data || !Array.isArray(data) || data.length === 0) {
-        grid.innerHTML = `
-        <div class="our-pottery-section-container-horizontal-straight"></div>
-        <div class="our-pottery-section-container-vertical-straight"></div>
-        <div class="error">No products found</div>
-      `;
-        return;
-      }
+    let index = 0;
 
-      let shown = [];
-      if (category === "tea") shown = data.slice(0, 5);
-      if (category === "kitchen") shown = data.slice(5, 8);
-      if (category === "plants") shown = data.slice(8, 10);
+    function renderNextBatch() {
+      const batch = products.slice(index, index + batchSize);
+      if (!batch.length) return;
 
-      if (shown.length === 0) {
-        grid.innerHTML = `
-        <div class="our-pottery-section-container-horizontal-straight"></div>
-        <div class="our-pottery-section-container-vertical-straight"></div>
-        <div class="error">No products found for this category</div>
-      `;
-        return;
-      }
+      grid.insertAdjacentHTML("beforeend", batch.map(productToHTML).join(""));
+      index += batchSize;
 
+      requestAnimationFrame(renderNextBatch);
+    }
+
+    renderNextBatch();
+  }
+
+  function setGridContent(content) {
+    const grid = document.querySelector(GRID_SELECTOR);
+    if (grid) {
       grid.innerHTML = `
       <div class="our-pottery-section-container-horizontal-straight"></div>
       <div class="our-pottery-section-container-vertical-straight"></div>
-      ${shown.map(productToHTML).join("")}
-    `;
-    } catch (err) {
-      console.error(err);
-      grid.innerHTML = `
-      <div class="our-pottery-section-container-horizontal-straight"></div>
-      <div class="our-pottery-section-container-vertical-straight"></div>
-      <div class="error">Failed to load products: ${err.message}</div>
+      ${content}
     `;
     }
   }
 
-  function setupTabs() {
-    const tabs = document.querySelectorAll(".our-pottery-section-tabs-container button");
-    if (!tabs.length) {
-      console.warn("No tabs found");
-      return;
+  async function initCatalog() {
+    setGridContent("<div>Loading…</div>");
+    const products = await fetchProducts();
+    if (products.length) {
+      renderProductsLazy(products, 2);
+    } else {
+      setGridContent("<div>No products found</div>");
     }
-
-    tabs.forEach((btn) =>
-      btn.addEventListener("click", async () => {
-        tabs.forEach((b) => b.classList.remove("our-pottery-tab-actual"));
-        btn.classList.add("our-pottery-tab-actual");
-
-        const text = btn.textContent.trim().toLowerCase();
-        let category = "tea";
-        if (text.includes("kitchen")) category = "kitchen";
-        if (text.includes("plants")) category = "plants";
-
-        await renderProducts(category);
-      })
-    );
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    setupTabs();
-    renderProducts("tea");
-  });
+  document.addEventListener("DOMContentLoaded", initCatalog);
 </script>
 </body>
 </html>

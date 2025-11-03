@@ -67,26 +67,7 @@
     <div class="our-digital-notes-section-container">
       <div class="our-digital-notes-section-blogs-horizontal-straight"></div>
       <div class="our-digital-notes-section-blogs-vertical-straight"></div>
-      <div class="our-digital-notes-section-blog-container">
-        <img class="our-digital-notes-section-blog-image-container" src="../images/blog/content/tea10.png" alt="">
-        <div class="our-digital-notes-section-blog-title-and-button-read-container">
-          <h3 class="our-digital-notes-section-blog-title-container our-digital-notes-h3">Pottery Secrets</h3>
-          <button class="our-digital-notes-default-text our-digital-notes-section-blog-button-read-container">Read</button>
-        </div>
-        <div class="our-digital-notes-section-blog-description-container our-digital-notes-default-text">
-          <p>Discover the timeless art of pottery and unlock the secrets hidden in every curve and glaze. From mastering the perfect wheel technique to understanding how clay transforms in the kiln, each step reveals a blend of tradition and creativity. The true magic lies in the details—subtle textures, natural imperfections, and the unique touch of the artisan’s hand, turning simple earth into lasting beauty.</p>
-        </div>
-      </div>
-      <div class="our-digital-notes-section-blog-container">
-        <img class="our-digital-notes-section-blog-image-container" src="../images/blog/content/tea13.png" alt="">
-        <div class="our-digital-notes-section-blog-title-and-button-read-container">
-          <h3 class="our-digital-notes-section-blog-title-container our-digital-notes-h3">The best materials for pottery</h3>
-          <button class="our-digital-notes-default-text our-digital-notes-section-blog-button-read-container">Read</button>
-        </div>
-        <div class="our-digital-notes-section-blog-description-container our-digital-notes-default-text">
-          <p>The best material for pottery often depends on the desired look and function, but stoneware is a favorite for its durability and versatility. It’s strong, resistant to chipping, and perfect for both functional pieces like mugs and plates, as well as decorative art. Porcelain offers a delicate, refined finish, ideal for intricate designs</p>
-        </div>
-      </div>
+
     </div>
   </div>
 </main>
@@ -141,5 +122,89 @@
     </div>
   </div>
 </footer>
+<script>
+  const API_BASE = "https://ceramic-api.onrender.com/api";
+  const POSTS_API = `${API_BASE}/posts`;
+  const CONTAINER_SELECTOR = ".our-digital-notes-section-container";
+
+  async function fetchPosts() {
+    try {
+      const res = await fetch(POSTS_API);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    } catch (err) {
+      console.error("Error fetching posts:", err);
+      return [];
+    }
+  }
+
+  const postToHTML = ({ image, title, excerpt }) => `
+    <div class="our-digital-notes-section-blog-container">
+      <img
+        class="our-digital-notes-section-blog-image-container"
+        src="${new URL(image, API_BASE)}"
+        alt="${title}"
+        loading="lazy"
+      >
+      <div class="our-digital-notes-section-blog-title-and-button-read-container">
+        <h3 class="our-digital-notes-section-blog-title-container our-digital-notes-h3">${title}</h3>
+        <button class="our-digital-notes-default-text our-digital-notes-section-blog-button-read-container">
+          Read
+        </button>
+      </div>
+      <div class="our-digital-notes-section-blog-description-container our-digital-notes-default-text">
+        <p>${excerpt}</p>
+      </div>
+    </div>
+  `;
+
+  function setContainerContent(content) {
+    const container = document.querySelector(CONTAINER_SELECTOR);
+    if (!container) return;
+
+    container.innerHTML = `
+      <div class="our-digital-notes-section-blogs-horizontal-straight"></div>
+      <div class="our-digital-notes-section-blogs-vertical-straight"></div>
+      ${content}
+    `;
+  }
+
+  function renderPostsLazy(posts, batchSize) {
+    const container = document.querySelector(CONTAINER_SELECTOR);
+    if (!container) return;
+
+    container.innerHTML = `
+    <div class="our-digital-notes-section-blogs-horizontal-straight"></div>
+    <div class="our-digital-notes-section-blogs-vertical-straight"></div>
+  `;
+
+    let index = 0;
+
+    function renderNextBatch() {
+      const batch = posts.slice(index, index + batchSize);
+      if (!batch.length) return;
+
+      container.insertAdjacentHTML("beforeend", batch.map(postToHTML).join(""));
+      index += batchSize;
+
+      requestAnimationFrame(renderNextBatch);
+    }
+
+    renderNextBatch();
+  }
+
+  async function initBlog() {
+    setContainerContent("<div class='loading'>Loading…</div>");
+    const posts = await fetchPosts();
+
+    if (posts.length) {
+      renderPostsLazy(posts, 1);
+    } else {
+      setContainerContent("<div class='error'>No posts found</div>");
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", initBlog);
+</script>
 </body>
 </html>
