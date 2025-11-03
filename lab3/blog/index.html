@@ -194,13 +194,13 @@
   }
 
   async function initBlog() {
-    setContainerContent("<div class='loading'>Loading…</div>");
+    setContainerContent("<div>Loading…</div>");
     const posts = await fetchPosts();
 
     if (posts.length) {
       renderPostsLazy(posts, 1);
     } else {
-      setContainerContent("<div class='error'>No posts found</div>");
+      setContainerContent("<div>No posts found</div>");
     }
   }
 
