@@ -1,0 +1,114 @@
+@layer utilities {
+  .catalog-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  .catalog-main {
+    margin-inline: auto;
+    @media (width >= 768px) {
+      min-width: 800px;
+    }
+    @media (width >= 1280px) {
+      min-width: 1440px;
+    }
+  }
+
+  .our-pottery-section {
+
+  }
+
+  .our-pottery-section-title-h2 {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+    margin-bottom: 32px;
+
+  }
+  .our-pottery-section-tabs-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px;
+    max-width: 450px;
+    border: 1px solid var(--color-lab3-black);
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+    margin: 16px;
+
+    @media (width >= 768px) {
+      margin: 32px;
+    }
+  }
+
+  .our-pottery-tab-actual {
+    padding-inline: 16px;
+    padding-block: 4px;
+    transition: color 0.2s ease, background-color 0.2s ease;
+    text-decoration-line: underline;
+    &:hover {
+      background-color: var(--color-lab3-black);
+      color: var(--color-white);
+    }
+  }
+
+  .our-pottery-tab {
+    padding-inline: 16px;
+    padding-block: 4px;
+    transition: color 0.2s ease, background-color 0.2s ease;
+    &:hover {
+      background-color: var(--color-lab3-black);
+      color: var(--color-white);
+    }
+  }
+  .our-pottery-section-container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1440px;
+    gap: 24px;
+    margin: 16px;
+    position: relative;
+    @media (width >= 768px) {
+      margin: 40px;
+      padding: 16px;
+    }
+  }
+  .our-pottery-section-container-vertical-straight {
+    display: none;
+    @media (width >= 768px) {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 2px;
+      height: 200px;
+      background-color: var(--color-lab3-black);
+    }
+  }
+
+  .our-pottery-section-container-horizontal-straight {
+    display: none;
+    @media (width >= 768px) {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 2px;
+      background-color: var(--color-lab3-black);
+    }
+  }
+
+  .our-pottery-section-product-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 285px;
+    border: 1px solid var(--color-lab3-black);
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .our-pottery-section-product-text-container {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+  }
+}

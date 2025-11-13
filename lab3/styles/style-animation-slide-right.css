@@ -1,0 +1,17 @@
+.slide-in-absolute {
+  animation: slideInAbsolute 1s ease-out 0.4s forwards;
+  opacity: 0;
+  position: relative;
+  right: -100%;
+}
+
+@keyframes slideInAbsolute {
+  from {
+    opacity: 0;
+    right: -100%;
+  }
+  to {
+    opacity: 1;
+    right: 0;
+  }
+}

@@ -1,0 +1,126 @@
+@layer utilities {
+  /*fonts start*/
+  .get-in-touch-section-barlow-default-text {
+    font-family: "Barlow", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .dream-text {
+    font-family: "Barlow", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-style: italic;
+
+    @media (width <= 768px) {
+      font-size: 32px;
+    }
+  }
+  .default-homepage-text {
+    font-family: "Barlow", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+  }
+
+  .about-us-default-text {
+    font-family: "Barlow", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+  }
+
+  .catalog-barlow-h2 {
+    font-family: "Barlow", sans-serif;
+    font-size: 40px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .catalog-barlow-tabs-text {
+    font-family: "Barlow", sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .catalog-barlow-default-text {
+    font-family: "Barlow", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+  .catalog-barlow-price-text {
+    font-family: "Barlow", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+  .homepage-barlow-h3 {
+    font-family: "Barlow", sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .homepage-barlow-h2 {
+    --font-family: "Barlow", sans-serif;
+    font-size: 40px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  .our-digital-notes-h2 {
+    --font-family: "Barlow", sans-serif;
+    font-size: 40px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  .our-digital-notes-h3 {
+    font-family: "Barlow", sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .our-digital-notes-default-text {
+    font-family: "Barlow", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+  }
+  .about-us-barlow-h2 {
+    --font-family: "Barlow", sans-serif;
+    font-size: 40px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .h3-footer-text {
+    font-family: "Barlow", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+
+  .footer-text-default {
+    font-family: "Barlow", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+  }
+
+  .header-menu-item-link {
+    display: block;
+    font-family: "Barlow", sans-serif;
+    font-weight: 400;
+    font-size: 1px;
+  }
+
+  .logo-nav__flex {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    font-family: "Barlow", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    text-transform: uppercase;
+  }
+  /*fonts end*/
+}

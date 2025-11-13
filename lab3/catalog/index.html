@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Ceramic-soul-catalog</title>
+  <link rel="stylesheet" href="./catalogpage-main.css">
+</head>
+<body class="catalog-body">
+<header class="header-container">
+  <nav role="navigation" class="header-nav">
+    <div id="menuToggle">
+      <input type="checkbox" id="menuCheckbox" />
+      <span></span>
+      <span></span>
+      <span></span>
+      <ul id="menu">
+        <li class="header-menu-item-link">
+          <a href="/lab3/catalog/" >Catalog</a>
+        </li>
+        <li class="header-menu-item-link">
+          <a href="/lab3/blog/" >Blog</a>
+        </li>
+        <li class="header-menu-item-link">
+          <a href="/lab3/about/" >About</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="logo-nav-container">
+    <div class="logo-nav-container__flex">
+      <div class="logo-nav__logo">
+        <a href="/lab3/">
+          <img src="../images/header/logo.png" alt="">
+        </a>
+      </div>
+      <nav class="logo-nav__nav">
+        <ul class="logo-nav__flex">
+          <li>
+            <a href="/lab3/catalog/">catalog</a>
+          </li>
+          <li>
+            <a href="/lab3/blog/">blog</a>
+          </li>
+          <li>
+            <a href="/lab3/about/">about</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div class="icons-container">
+    <div class="icons__icon">
+      <img src="../images/header/search-outline.svg"  alt="">
+    </div>
+    <div class="icons__icon">
+      <img src="../images/header/shopping-bag.svg" alt="">
+    </div>
+  </div>
+</header>
+<main class="catalog-main">
+  <div class="our-pottery-section">
+    <h2 class="our-pottery-section-title-h2 catalog-barlow-h2">Our pottery</h2>
+    <div class="our-pottery-section-tabs-container">
+      <button class="catalog-barlow-tabs-text our-pottery-tab-actual">for tea</button>
+      <button class="catalog-barlow-tabs-text our-pottery-tab">
+        for kitchen
+      </button>
+      <button class="catalog-barlow-tabs-text our-pottery-tab">
+        for plants
+      </button>
+    </div>
+    <div class="our-pottery-section-container">
+      <div class="our-pottery-section-container-horizontal-straight"></div>
+      <div class="our-pottery-section-container-vertical-straight"></div>
+
+    </div>
+  </div>
+
+</main>
+<footer class="footer-cont">
+  <div class="footer-container">
+    <div class="newsletter">
+      <h3 class="h3-footer-text">Newsletter</h3>
+      <p class="footer-text-default">Keep up to date with news and promotions</p>
+      <form class="feedback-form">
+        <div class="input-wrapper">
+          <input type="email" id="email" name="email" required class="email-input footer-text-default is-invalid" placeholder=" "/>
+          <label for="email" class="email-label footer-text-default">Enter your e-mail</label>
+        </div>
+        <label class="checkbox-label footer-text-default">
+          <input type="checkbox" class="checkbox"/>I agree with the <a href="#" class="terms-link">terms</a>
+        </label>
+        <button type="submit" class="footer-text-default submit-button">SUBMIT</button>
+      </form>
+    </div>
+    <div class="discover-section">
+      <h3 class="h3-footer-text">Discover</h3>
+      <ul class="myspace footer-text-default">
+        <li><a href="/lab3/about/" class="link footer-text-default">About Us</a></li>
+        <li><a href="/lab3/blog/" class="link footer-text-default">Blog</a></li>
+      </ul>
+    </div>
+    <div class="shopping-section">
+      <h3 class="h3-footer-text">Shopping</h3>
+      <a href="/lab3/catalog/" class="link footer-text-default">Catalog</a>
+    </div>
+    <div class="information-section">
+      <h3 class="h3-footer-text">Information</h3>
+      <a href="#" class="link footer-text-default">Terms and Conditions</a>
+    </div>
+
+    <div class="follow-us-section myspace">
+      <h3 class="h3-footer-text">Follow Us</h3>
+      <div class="follow-us-section-icons-container">
+        <a href="https://facebook.com" target="_blank">
+          <img src="../images/footer/icons/facebook.svg" alt="Facebook" class="social-icon" />
+        </a>
+        <a href="https://instagram.com" target="_blank">
+          <img src="../images/footer/icons/instagram.svg" alt="Instagram" class="social-icon" />
+        </a>
+        <a href="https://pinterest.com" target="_blank">
+          <img src="../images/footer/icons/pinterest.svg" alt="Pinterest" class="social-icon" />
+        </a>
+      </div>
+    </div>
+    <div class="footer-text-default copyright">
+      <p>© Copyright 2025, Ceramic soul</p>
+    </div>
+  </div>
+</footer>
+<script>
+  const API_BASE = "https://ceramic-api.onrender.com/api";
+  const PRODUCTS_API = `${API_BASE}/products`;
+  const GRID_SELECTOR = ".our-pottery-section-container";
+
+
+  async function fetchProducts() {
+    try {
+      const res = await fetch(PRODUCTS_API);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    } catch (err) {
+      console.error("Error fetching products:", err);
+      return [];
+    }
+  }
+
+  const productToHTML = ({ image, title, price }) => `
+  <div class="our-pottery-section-product-container">
+    <img src="${new URL(image, API_BASE)}" alt="${title}" loading="lazy">
+    <div class="our-pottery-section-product-text-container">
+      <p class="catalog-barlow-default-text">${title}</p>
+      <p class="catalog-barlow-price-text">${price} €</p>
+    </div>
+  </div>
+`;
+  function renderProductsLazy(products, batchSize) {
+    const grid = document.querySelector(GRID_SELECTOR);
+    if (!grid) return;
+
+    grid.innerHTML = `
+    <div class="our-pottery-section-container-horizontal-straight"></div>
+    <div class="our-pottery-section-container-vertical-straight"></div>
+  `;
+
+    let index = 0;
+
+    function renderNextBatch() {
+      const batch = products.slice(index, index + batchSize);
+      if (!batch.length) return;
+
+      grid.insertAdjacentHTML("beforeend", batch.map(productToHTML).join(""));
+      index += batchSize;
+
+      requestAnimationFrame(renderNextBatch);
+    }
+
+    renderNextBatch();
+  }
+
+  function setGridContent(content) {
+    const grid = document.querySelector(GRID_SELECTOR);
+    if (grid) {
+      grid.innerHTML = `
+      <div class="our-pottery-section-container-horizontal-straight"></div>
+      <div class="our-pottery-section-container-vertical-straight"></div>
+      ${content}
+    `;
+    }
+  }
+
+  async function initCatalog() {
+    setGridContent("<div>Loading…</div>");
+    const products = await fetchProducts();
+    if (products.length) {
+      renderProductsLazy(products, 2);
+    } else {
+      setGridContent("<div>No products found</div>");
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", initCatalog);
+</script>
+</body>
+</html>

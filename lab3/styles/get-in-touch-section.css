@@ -1,0 +1,256 @@
+@layer utilities {
+  /* git section start */
+
+  .get-in-touch-section {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    max-width: 1200px;
+    @media (width >= 768px) {
+      padding: 32px;
+    }
+    @media (width >= 1280px) {
+      margin-inline: auto;
+    }
+  }
+
+  .get-in-touch-section-title-h2 {
+    display: flex;
+    flex-direction: column;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    margin-inline: auto;
+  }
+
+  .get-in-touch-section-photo-and-form-container {
+    @media (width >= 1024px ) {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+
+  .get-in-touch-section-photo-left {
+    display: none;
+    @media (width >= 1024px) {
+      display: block;
+      width: 50%;
+    }
+  }
+
+  .get-in-touch-section-form {
+    display: grid;
+    row-gap: 4px;
+
+    grid-template-rows: repeat(9, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-height: 680px;
+
+    @media (width >= 768px) {
+      grid-template-rows: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+    }
+
+    @media (width >= 1024px) {
+      grid-template-rows: repeat(9, minmax(0, 1fr));
+      width: 50%;
+    }
+
+    @media (width >= 1280px) {
+      grid-template-rows: repeat(3, minmax(0, 1fr));
+      margin-left: 48px;
+    }
+  }
+
+  .get-in-touch-section-form-name {
+    display: flex;
+    flex-direction: column;
+    grid-row: span 2 / span 2;
+    grid-column: span 3 / span 3;
+
+    @media (width >= 1024px) {
+      grid-column: span 4 / span 4;
+    }
+
+    @media (width >= 1280px) {
+      grid-column: span 3 / span 3;
+      grid-row: span 1 / span 1;
+      grid-row-start: 1;
+    }
+  }
+
+  .get-in-touch-section-form-input {
+    border: 1px solid var(--color-gray-300);
+    border-radius: 4px;
+    padding: 8px 12px;
+    color: var(--color-gray-400);
+    outline: none;
+
+    &::placeholder {
+      color: var(--color-gray-400);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-lab3-black);
+    }
+
+    &:hover {
+      border-color: var(--color-lab3-black);
+    }
+
+    &:invalid:focus {
+      border-color: var(--color-lab3-red);
+    }
+  }
+
+  .up-form-text {
+    color:  var(--color-lab3-black);
+    margin-bottom: 4px;
+  }
+
+  .get-in-touch-section-form-email {
+    display: flex;
+    flex-direction: column;
+    grid-column: span 3 / span 3;
+    grid-row: span 2 / span 2;
+    @media (width >= 768px) {
+      grid-row-start: 3;
+    }
+    @media (width >= 1024px ) {
+      grid-column: span 4 / span 4;
+    }
+    @media (width >= 1280px ) {
+      grid-row-start: 1;
+      grid-column: span 3 / span 3;
+      grid-column-start: 5;
+      grid-row: span 1 / span 1;
+    }
+  }
+
+  .get-in-touch-section-form-question {
+    display: flex;
+    flex-direction: column;
+    grid-column: span 3 / span 3;
+    grid-row: span 3 / span 3;
+    @media (width >= 768px) {
+      grid-row-start: 5;
+    }
+    @media (width >= 1024px ) {
+      grid-column: span 4 / span 4;
+    }
+    @media (width >= 1280px ) {
+      grid-row-start: 2;
+      grid-column-start: 5;
+      grid-column: span 3 / span 3;
+      grid-row: span 2 / span 2;
+    }
+  }
+  .get-in-touch-section-form-agreement {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    grid-column: span 3 / span 3;
+    grid-row: span 1 / span 1;
+
+    @media (width >= 768px) {
+      grid-row-start: 8;
+    }
+
+    @media (width >= 1024px) {
+      grid-column: span 4 / span 4;
+    }
+
+    @media (width >= 1280px) {
+      grid-row-start: 4;
+    }
+  }
+
+  .get-in-touch-section-form-agreement-checkbox {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border: 1px solid var(--color-gray-500);
+    border-radius: 4px;
+    background-color: transparent;
+    cursor: pointer;
+    flex-shrink: 0;
+
+    &:checked {
+      background-color: var(--color-lab3-black);
+      border-bottom-color: var(--color-lab3-black);
+    }
+  }
+
+  .get-in-touch-section-form-request-button {
+    border: 1px solid var(--color-lab3-black);
+    text-transform: uppercase;
+    padding: 8px 40px;
+    color: var(--color-lab3-black);
+    transition: all 0.3s ease;
+    width: fit-content;
+    border-radius: 4px;
+    grid-column: span 3 / span 3;
+    grid-row: span 1 / span 1;
+
+    &:hover {
+      border-color: var(--color-lab3-ceramic);
+      color: var(--color-lab3-ceramic);
+    }
+
+    &:active {
+      border-color: var(--color-lab3-ceramic);
+      color: var(--color-lab3-black);
+    }
+
+    &:disabled {
+      border-color: var(--color-lab3-gray2);
+      color: var(--color-lab3-gray2);
+      cursor: not-allowed;
+    }
+
+    @media (min-width: 768px) {
+      grid-row: span 1 / span 1;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      grid-row-start: 9;
+    }
+
+    @media (min-width: 1024px) {
+      grid-column: span 4 / span 4;
+    }
+
+    @media (min-width: 1280px) {
+      grid-row-start: 5;
+      margin-top: 24px;
+      margin-bottom: 24px;
+    }
+  }
+
+  .get-in-touch-section-form-vasa-picture {
+    display: none;
+
+    @media (width >= 768px) {
+      display: block;
+      grid-column: span 1 / span 1;
+      grid-row: span 3 / span 3;
+      margin: 16px;
+      grid-row-start: 7;
+      grid-column-end: -1;
+    }
+
+    @media (width >= 1024px) {
+      margin: 0;
+      grid-row-start: 8;
+    }
+
+    @media (width >= 1280px) {
+      grid-row: span 2 / span 2;
+      grid-column: span 1 / span 1;
+      grid-column-end: -1;
+      grid-row-start: 4;
+    }
+  }
+  /* git section end */
+}
